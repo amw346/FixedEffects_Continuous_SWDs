@@ -110,7 +110,9 @@ sample_size_model1_general <- function(num_I, num_T, ICC, Var_Y, design, theta, 
   return(ceiling(num_N))
 }
 
-# Example 1 
+# Example 1:
+# Real world examples based on PROMPT Study
+# Model 1, no transition period included, assuming 5 clusters and 6 time periods
 design_example <- matrix(c(0,1,1,1,1,1,
                    0,0,1,1,1,1,
                    0,0,0,1,1,1,
@@ -126,9 +128,6 @@ sample_size_model1_general(num_I = 5, num_T = 6,
                      ICC = 0.03, Var_Y = 81, design = design_example, 
                      theta = 1.78, alpha = 0.05, power = 0.8)
 
-sample_size_model1_general(num_I = 5, num_T = 6,
-                           ICC = 0.03, Var_Y = 81, design = design_example, 
-                           theta = 1.78, alpha = 0.05, power = 1)
 
 ########################################################################
 # Power of fixed effects model, time effects included, c clusters randomized
@@ -208,7 +207,9 @@ sample_size_model1_standard <- function(num_T, c, ICC, Var_Y, theta, alpha, powe
   return(ceiling(N))
 }
 
-# Example 2
+# Example 2:
+# Real world examples based on PROMPT Study
+# Model 1, no transition period included, assuming 5 clusters and 6 time periods, c = 1
 power_model1_standard( num_T = 6, c= 1, num_N = 84,
                      ICC = 0.03, Var_Y = 81, 
                      theta = 1.78, alpha = 0.05)
@@ -308,7 +309,9 @@ sample_size_model2_general <- function(num_I, num_T, num_N, ICC, Var_Y, design, 
   return(ceiling(N))
 }
 
-# Example 3 
+# Example 3:
+# Real world examples based on PROMPT Study
+# Model 2, no transition period included, assuming 5 clusters and 6 time periods
 design_example <- matrix(c(0,1,1,1,1,1,
                            0,0,1,1,1,1,
                            0,0,0,1,1,1,
@@ -491,7 +494,9 @@ sample_size_model1_transition <- function( num_I, ICC, Var_Y, theta, alpha, powe
 }
 
 
-# Example 4
+# Example 4:
+# Real world examples based on PROMPT Study
+# Model 1, transition period included, assuming 5 clusters and 7 time periods
 power_model1_transition( num_I = 5, num_N = 128, 
                          ICC = 0.03, Var_Y = 81,
                          theta = 1.78, alpha  = 0.05)
