@@ -28,14 +28,15 @@ power_model1_general <- function(num_I, num_T, num_N, ICC, Var_Y, design, theta,
   # Assumptions:
   
   # Analysis model: Model 1
-  # Design of SWD is specified in parameter 'design' 
   
-  # num_N     : number of observations sampled per cluster-period
   # num_I     : number of clusters
   # num_T     : number of periods
+  # num_N     : number of observations sampled per cluster-period
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
-  # X_{ij}    : Indicator function: 1 = intervention , 0 = control
+  # design    : Matrix specifying the stepped wedge treatment allocation scheme. 
+  #                   Rows correspond to clusters and columns correspond to time periods.
+  #                   Entries are coded as 0 for control and 1 for intervention.
   # theta     : intervention effect
   # alpha     : type 1 error rate
   
@@ -74,13 +75,14 @@ sample_size_model1_general <- function(num_I, num_T, ICC, Var_Y, design, theta, 
   # Assumptions:
   
   # Analysis model: Model 1
-  # Design of SWD is specified in parameter 'design' 
   
   # num_I     : number of clusters
   # num_T     : number of periods
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
-  # X_{ij}    : Indicator function: 1 = intervention , 0 = control
+  # design    : Matrix specifying the stepped wedge treatment allocation scheme. 
+  #                   Rows correspond to clusters and columns correspond to time periods.
+  #                   Entries are coded as 0 for control and 1 for intervention.
   # theta     : intervention effect
   # alpha     : type 1 error rate
   # power     : desired power, as fraction i.e. 0.80
@@ -131,17 +133,17 @@ sample_size_model1_general(num_I = 5, num_T = 6,
 
 ########################################################################
 # Power of fixed effects model, time effects included, c clusters randomized
-# per time period starting with step 2 (standard SWD)
+# per time period starting with period 2 (standard SWD)
 ########################################################################
 power_model1_standard <- function(num_T, num_N, c, ICC, Var_Y, theta, alpha) {
   # Assumptions:
   
   # Analysis model: Model 1
-  # A fixed number of clusters, c, cross over per time step (starting with step 2)
+  # A fixed number of clusters, c, cross over per time step (starting with period 2)
   
-  # num_N     : sampled per cluster-period
   # num_T     : number of periods
-  # c         : clusters crossed over per time period
+  # num_N     : sampled per cluster-period
+  # c         : clusters crossed over per time period beginning in period 2
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
   # theta     : intervention effect
@@ -169,17 +171,17 @@ power_model1_standard <- function(num_T, num_N, c, ICC, Var_Y, theta, alpha) {
 
 ########################################################################
 # Required sample size of fixed effects model, time effects included, c clusters randomized
-# per time period starting with step 2 (standard SWD)
+# per time period starting with period 2 (standard SWD)
 ########################################################################
 sample_size_model1_standard <- function(num_T, c, ICC, Var_Y, theta, alpha, power) {
   # Returns the per cluster period sample size required to achieve the desired power
   
   # Assumptions:
   # Analysis model: Model 1
-  # A fixed number of clusters, c, cross over per time step (starting with step 2)
+  # A fixed number of clusters, c, cross over per time period (starting with period 2)
   
   # num_T     : number of periods
-  # c         : clusters crossed over per time period
+  # c         : clusters crossed over per time period beginning in period 2
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
   # theta     : intervention effect
@@ -227,14 +229,15 @@ power_model2_general <- function(num_I, num_T, num_N, ICC, Var_Y, design, theta,
   # Assumptions:
   
   # Analysis model: Model 2
-  # Design of SWD is specified in parameter 'design' 
   
-  # num_N     : number of observations sampled per cluster-period
   # num_I     : number of clusters
   # num_T     : number of periods
+  # num_N     : number of observations sampled per cluster-period
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
-  # X_{ij}    : Indicator function: 1 = intervention , 0 = control
+  # design    : Matrix specifying the stepped wedge treatment allocation scheme. 
+  #                   Rows correspond to clusters and columns correspond to time periods.
+  #                   Entries are coded as 0 for control and 1 for intervention.
   # theta     : intervention effect
   # alpha     : type 1 error rate
   
@@ -266,19 +269,20 @@ power_model2_general <- function(num_I, num_T, num_N, ICC, Var_Y, design, theta,
 ########################################################################
 # Required sample size of fixed effects model for SWD, without time effects (Model 2)
 ########################################################################
-sample_size_model2_general <- function(num_I, num_T, num_N, ICC, Var_Y, design, theta, alpha, power) {
+sample_size_model2_general <- function(num_I, num_T, ICC, Var_Y, design, theta, alpha, power) {
   # Returns the per cluster period sample size required to achieve the desired power
   
   # Assumptions:
   
   # Analysis model: Model 2
-  # Design of SWD is specified in parameter 'design' 
   
   # num_I     : number of clusters
   # num_T     : number of periods
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
-  # X_{ij}    : Indicator function: 1 = intervention , 0 = control
+  # design    : Matrix specifying the stepped wedge treatment allocation scheme. 
+  #                   Rows correspond to clusters and columns correspond to time periods.
+  #                   Entries are coded as 0 for control and 1 for intervention.
   # theta     : intervention effect
   # alpha     : type 1 error rate
   # power     : desired power, as fraction i.e. 0.80
@@ -336,12 +340,12 @@ power_model1_transition <- function( num_I, num_N, ICC, Var_Y, theta, alpha ) {
   # Assumptions:
   
   # Analysis model: Model 1
-  # SWD with 1 cluster crossed over per time point beginning in step 3
+  # SWD with 1 cluster crossed over per time period beginning in period 3
   # and a transition period between control and treatment conditions
   # I > 2, I = T - 2
   
+  # num_I     : number of clusters
   # num_N     : number of observations sampled per cluster-period
-  # num_I     : number of periods
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
   # theta     : intervention effect
@@ -416,19 +420,20 @@ power_model1_transition <- function( num_I, num_N, ICC, Var_Y, theta, alpha ) {
 # with time effects (Model 1)
 ########################################################################
 sample_size_model1_transition <- function( num_I, ICC, Var_Y, theta, alpha, power ) {
-  # Returns: (per-cluster period sample size, and total sample size)
+  # Returns: (per cluster-period sample size, and total sample size)
   # Assumptions:
   
   # Analysis model: Model 1
-  # SWD with 1 cluster crossed over per time point beginning in step 3
+  # SWD with 1 cluster crossed over per time period beginning in period 3
   # and a transition period between control and treatment conditions
   # I > 2, I = T - 2
 
-  # num_T     : number of periods
+  # num_I     : number of clusters
   # ICC       : Intraclass correlation coefficient
   # Var_Y     : total variance, sigma_e^2 = Var_Y*(1-ICC)
   # theta     : intervention effect
   # alpha     : type 1 error rate
+  # power     : desired power, as fraction i.e. 0.80
   
   stopifnot(
     num_I > 2,
